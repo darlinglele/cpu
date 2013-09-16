@@ -2,25 +2,17 @@ import static java.lang.Thread.sleep;
 
 public class Runner implements Runnable {
 
-
+    private final int periodic;
     private int usage = 50;
-    private final int due;
 
-    public Runner(int due, int usage) {
-        this.usage = usage;
-        this.due = due;
+    public Runner(int periodic) {
+        this.periodic = periodic;
     }
 
     @Override
     public void run() {
         long start = System.currentTimeMillis();
         while (true) {
-            long current = System.currentTimeMillis();
-            if (current - start > due * 1000) {
-                Thread.currentThread().interrupt();
-                return;
-            }
-
             boolean timeout = false;
             long s = System.currentTimeMillis();
             while (!timeout) {
@@ -42,7 +34,7 @@ public class Runner implements Runnable {
     }
 
     private void changeUsage(long start, long end) {
-        this.usage = (int) (50 + Math.sin((end - start) / 1000 * 3.14159 / 20) * 50);
+        this.usage = (int) (50 + Math.sin((end - start) / 1000 * 2 * 3.14159 / periodic) * 50);
     }
 
 }

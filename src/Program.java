@@ -1,5 +1,5 @@
 public class Program {
     public static void main(String[] args) {
-        Cpu.set(1200, 50);
+        new Sine(50, 8).draw();
     }
 }
